@@ -1,2 +1,8 @@
-# tune-keeper-spotify
-Tune Keeper is a Spotify playlist backup service designed to keep your music collections safe. Using a React frontend setup with Vite and the Spotify API, Tune Keeper allows you to effortlessly back up your playlists. Simple, reliable, and perfect for music lovers who want to safeguard their tunes.
+# React + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
