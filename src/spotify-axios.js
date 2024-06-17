@@ -1,9 +1,9 @@
 import axios from 'axios';
 import qs from 'qs';
 
-export const getAuth = async () => {
-  const clientId = '708626a94e0747b0b03cd7f9e5c1be35';
-  const clientSecret = '04563e29fa004828859e734b23db0006';
+export const getAuthToken = async () => {
+  const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
+  const clientSecret = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
   
   const headers = {
     headers: {
@@ -15,6 +15,7 @@ export const getAuth = async () => {
       password: clientSecret,
     },
   };
+
   const data = {
     grant_type: 'client_credentials',
   };

@@ -1,35 +1,26 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import App from './App.jsx'
 import ErrorPage from './error-page.jsx'
-import Contact from './routes/contact.jsx'
-import Root, { loader as rootLoader, action as rootAction } from './routes/root.jsx'
 import './index.css'
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Root />,
-    errorElement: <ErrorPage />,
-    loader: rootLoader,
-    action: rootAction,
-    children: [
-      {
-        path: "contacts/:contactId",
-        element: <Contact />,
-      },
-    ]
-  },
-  {
-    path: '/route',
-    element: <div>Hellow ROUTER</div>,
-  },
-])
+import Playlist from './routes/Playlist.jsx'
+import Header from './components/Header';
+import RedirectLogin from './RedirectLogin.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    {/* <App /> */}
-    <RouterProvider router={router}/>
+    <Router>
+      <Header />
+      <main className="p-8">
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/login" element={<RedirectLogin />} />
+          <Route path="/playlist" element={<Playlist />} />
+          {/* <Route path="/contact" element={<Contact />} /> */}
+          {/* Add more Route components as needed */}
+        </Routes>
+      </main>
+    </Router>
   </React.StrictMode>,
 )
