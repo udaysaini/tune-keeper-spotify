@@ -9,10 +9,7 @@ const Header = () => {
 
   const handleLogout = () => {
     logout();
-    // localStorage.removeItem('access_token');
-    // console.log('/', 'navigate');
-    // TODO : check navigation for React Router v6 
-    navigate('/home');
+    navigate('/');
   }
 
   return (
