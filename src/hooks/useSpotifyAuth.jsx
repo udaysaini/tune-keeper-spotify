@@ -18,18 +18,23 @@ const useSpotifyAuth = () => {
     const checkTokenExpiry = () => {
         // Implement token expiry logic here
         // For simplicity, assuming token is valid for 1 hour
-        const tokenExpiryTime = localStorage.getItem('token_expiry_time');
+        const tokenExpiryTime = localStorage.getItem('token_expiry_time');        
         return tokenExpiryTime && new Date().getTime() < tokenExpiryTime;
     };
 
     const refreshToken = async () => {
-        console.log('refreshToken Request sending');
         try {
-            const response = await axios.post('https://accounts.spotify.com/api/token', {
+            const payload = new URLSearchParams({
                 grant_type: 'refresh_token',
                 refresh_token: localStorage.getItem('refresh_token'),
                 client_id: CLIENT_ID,
                 client_secret: CLIENT_SECRET,
+            });
+
+            const response = await axios.post('https://accounts.spotify.com/api/token', payload.toString(), {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
             });
             const data = response.data;
             setAccessToken(data.access_token);
@@ -44,8 +49,6 @@ const useSpotifyAuth = () => {
 
     useEffect(() => {
         if (!checkTokenExpiry()) {
-            console.log('checkTokenExpiry : TOKEN EXPIRED.');
-            
             refreshToken();
         }
     }, []);
