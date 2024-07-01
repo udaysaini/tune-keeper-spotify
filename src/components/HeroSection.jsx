@@ -15,7 +15,7 @@ const heroSection = {
 export const HeroSection = () => {
     const { login } = useSpotifyAuth();
 
-    console.log({login});
+    // console.log({login});
  
     return (
         <div className="pt-20">

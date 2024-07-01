@@ -8,7 +8,7 @@ const RedirectLogin = () => {
     useEffect(() => {
         const fetchTokenFromCode = async (code) => {
             const access_token = localStorage.getItem('access_token')
-            console.log('Access TOKEN FROM LOCAL', { access_token });
+            // console.log('Access TOKEN FROM LOCAL', { access_token });
             if (access_token) {
                 navigate('/playlist');
                 return;
@@ -30,7 +30,7 @@ const RedirectLogin = () => {
                 localStorage.setItem('access_token', response?.data?.access_token);
                 localStorage.setItem('refresh_token', response?.data?.refresh_token);
                 localStorage.setItem('token_expiry_time', new Date().getTime() + (response?.data?.expires_in * 1000));
-                console.log('Access token', response.data);
+                // console.log('Access token', response.data);
                 navigate('/playlist');
             } catch (error) {
                 // console.error('Error exchanging code for token', error);

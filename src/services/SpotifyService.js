@@ -34,7 +34,7 @@ export const getUserPlaylists = async () => {
                 // offset: 5
             }
         });
-        console.log('response.data.items', response.data.items)
+        // console.log('response.data.items', response.data.items)
         return response.data.items;
     } catch(error) {
         console.error('Error fetching playlists', error);
@@ -67,7 +67,7 @@ export const getTracksForPlaylist = async (playlist_id) => {
 }
 
 export const getTracksForPlaylist_Export = async (playlist_id, offset, limit) => {
-    console.log('Offset aaya hai ', offset);
+    // console.log('Offset aaya hai ', offset);
     // TODO : Avoid Limit as MAGIC NUMBER. 
     let accessToken = getAccessToken();
     try {
