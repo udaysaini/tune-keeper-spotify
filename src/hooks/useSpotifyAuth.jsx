@@ -53,19 +53,23 @@ const useSpotifyAuth = () => {
         }
     }, []);
 
+    const login = () => {
+        window.location.href = getAuthUrl()
+    }
+
+    const logout = () => {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        localStorage.removeItem('token_expiry_time');
+        setAccessToken(null);
+        setIsAuthenticated(false);
+    }
+
     return {
         accessToken,
         isAuthenticated,
-        login: () => {
-            window.location.href = getAuthUrl()
-        },
-        logout: () => {
-            localStorage.removeItem('access_token');
-            localStorage.removeItem('refresh_token');
-            localStorage.removeItem('token_expiry_time');
-            setAccessToken(null);
-            setIsAuthenticated(false);
-        }
+        login,
+        logout
     };
 }
 
