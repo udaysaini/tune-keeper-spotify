@@ -3,10 +3,16 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const RedirectLogin = () => {
-    const navigate = useNavigate('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchTokenFromCode = async (code) => {
+            const access_token = localStorage.getItem('access_token')
+            // console.log('Access TOKEN FROM LOCAL', { access_token });
+            if (access_token) {
+                navigate('/playlist');
+                return;
+            }
             const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
             const clientSecret = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
             const redirectUri = import.meta.env.VITE_SPOTIFY_REDIRECT_URI;
@@ -21,8 +27,10 @@ const RedirectLogin = () => {
             try {
                 // Fetch the token, store it in local storage and then redirect to dashboard/playlist page
                 const response = await axios.post('https://accounts.spotify.com/api/token', params);
-                localStorage.setItem('access_token', response.data.access_token);
-                console.log('Access token', response.data);
+                localStorage.setItem('access_token', response?.data?.access_token);
+                localStorage.setItem('refresh_token', response?.data?.refresh_token);
+                localStorage.setItem('token_expiry_time', new Date().getTime() + (response?.data?.expires_in * 1000));
+                // console.log('Access token', response.data);
                 navigate('/playlist');
             } catch (error) {
                 // console.error('Error exchanging code for token', error);
@@ -43,15 +51,23 @@ const RedirectLogin = () => {
             }
         };
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get('code');
+        const getCodeFromURL = async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
 
-        if (code) {
-            fetchTokenFromCode(code);
+            if (code) {
+                await fetchTokenFromCode(code);
+            }
         }
+
+        getCodeFromURL();
     }, []);
 
-    return <div>Logging in...</div>;
+    return (
+        <div className="flex items-center justify-center min-h-screen">
+            <div className="text-xl text-gray-700">Logging in, please wait...</div>
+        </div>
+    );
 };
 
 export default RedirectLogin;
