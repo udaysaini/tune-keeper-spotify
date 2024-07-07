@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const BASE_URL = `https://api.spotify.com/v1`;
-const TRACK_LIMIT_API = 50;
+export const TRACK_API_LIMIT = 50;
+export const PLAYLIST_API_LIMIT = 50;
 
 const getAccessToken = () => {
     return localStorage.getItem('access_token');
@@ -22,7 +23,7 @@ export const getUserProfile = async () => {
     }
 }
 
-export const getUserPlaylists = async () => {
+export const getUserPlaylists = async ({ offset = 0, limit = 20 } = {}) => {
     let accessToken = getAccessToken();
     try {
         const response = await axios.get(`${BASE_URL}/me/playlists`, {
@@ -30,12 +31,17 @@ export const getUserPlaylists = async () => {
                 Authorization: 'Bearer ' + accessToken
             },
             params: {
-                limit: 50,
-                // offset: 5
+                limit,
+                offset
             }
         });
         // console.log('response.data.items', response.data.items)
-        return response.data.items;
+        console.log({response});
+
+        return {
+            playlists: response.data.items,
+            totalPlaylists: response.data.total
+        };
     } catch(error) {
         console.error('Error fetching playlists', error);
         throw error;
